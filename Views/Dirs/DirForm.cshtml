@@ -1,0 +1,29 @@
+﻿@model VOD.ViewModels.NewDirViewModel
+@{
+	ViewBag.Title = Model.Title;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title</h2>
+
+@using (Html.BeginForm("Save", "Dirs"))
+{
+	@Html.ValidationSummary(true, "Fix Errors.")
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.Name)
+		@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Name)
+	</div>
+
+	@Html.HiddenFor(m => m.Id)
+	@Html.AntiForgeryToken()
+	<button type="submit" class="btn btn-primary">Submit!</button>
+}
+
+
+@section scripts
+{
+	@Scripts.Render("~/ bundles / jqueryval")
+}
+

@@ -1,0 +1,92 @@
+﻿@model dynamic
+@{
+	ViewBag.Title = "New";
+}
+<h2>New </h2>
+<form id="newActorMovie">
+	<div class="form-group">
+		<label>Movie</label>
+		<div class="tt-container">
+			<input id="movie" type="text" value="" class="form-control" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label>Actor</label>
+		<div class="tt-container">
+			<input id="actor" type="text" value="" class="form-control" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 col-sm-4">
+			<ul id="actors" class="list-group"></ul>
+		</div>
+	</div>
+	<button class="btn btn-primary">Submit</button>
+</form>
+@section scripts
+{
+	<script>
+		$(document).ready(function () {
+			var vm = {
+				actorIds: []
+			};
+			var movies = new Bloodhound({
+				datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+				queryTokenizer: Bloodhound.tokenizers.whitespace,
+				prefetch: '/api/movies',
+				remote: {
+					url: '/api/movies?query=%QUERY',
+					wildcard: '%QUERY'
+				}
+			});
+			$('#movie').typeahead({
+				minLength: 3,
+				highlight: true
+			}, {
+				name: 'movies',
+				display: 'name',
+				source: movies,
+				limit :20
+			}).on("typeahead:select", function(e, movie) {
+				vm.movieId = movie.id;
+			});
+			var actors = new Bloodhound({
+				datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+				queryTokenizer: Bloodhound.tokenizers.whitespace,
+				prefetch: '/api/actors',
+				remote: {
+					url: '/api/actors?query=%QUERY',
+					wildcard: '%QUERY'
+				}
+			});
+			$('#actor').typeahead({
+				minLength: 3,
+				highlight: true
+			}, {
+				name: 'actors',
+				display: 'name',
+				source: actors,
+				limit: 20
+			}).on("typeahead:select", function (e, actor) {
+				$("#actors").append("<li class='list-group-item'>" + actor.name + "</li>");
+				$("#actor").typeahead("val", "");
+				vm.actorIds.push(actor.id);
+			});
+			$("#newActorMovie").submit(function (e) {
+				e.preventDefault();
+				$.ajax({
+					url: "/api/movieActor",
+					method: "post",
+					data: vm
+				})
+				.done(function () {
+					console.log("done");
+					toastr.success("Success.");
+				})
+				.fail(function () {
+					toastr.error("Error.");
+				});
+			});
+		});
+	</script>
+}

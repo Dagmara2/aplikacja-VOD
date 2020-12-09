@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<VOD.Models.Dir>
+
+@{
+	ViewBag.Title = "Directors";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Directors</h2>
+<p>
+	@Html.ActionLink("Add Director", "New", "Dirs", null, new { @class = "btn btn-primary" })
+</p>
+
+<table id="dirs" class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Director</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+</table>
+
+@section scripts
+	{
+	<script>
+		$(document).ready(function () {
+
+			var table = $("#dirs").DataTable({
+				ajax: {
+					url: "/api/dirs",
+					dataSrc: ""
+				},
+				columns: [
+					{
+						data: "name",
+						render: function (data, type, dir) {
+							return "<a href='/dirs/edit/" + dir.id + "'>" + dir.name + "</a>"
+						}
+					},
+					{
+						data: "id",
+						render: function (data) {
+							return "<button class='btn btn-danger js-delete' data-dir-id=" + data + ">X</button>";
+						}
+					}
+				]
+			});
+
+			$("#dirs").on("click", ".js-delete", function () {
+				var button = $(this);
+				bootbox.confirm("Are you sure you want to delete director?", function (result) {
+					if (result) {
+						$.ajax({
+							url: "/api/dirs/" + button.attr("data-dir-id"),
+							method: "DELETE",
+							success: function () {
+								table.row(button.parents("tr")).remove().draw();
+
+							}
+						});
+					}
+				});
+
+			});
+		});
+	</script>
+}

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<VOD.Models.Actor>
+@{
+	ViewBag.Title = "Actors";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Actors</h2>
+
+<table id="actors" class="table table-bordered table-hover">
+	<thead>
+		<tr>
+
+			<th>Actor</th>
+
+		</tr>
+	</thead>
+</table>
+
+@section scripts
+	{
+	<script>
+		$(document).ready(function () {
+
+			var table = $("#actors").DataTable({
+				ajax: {
+					url: "/api/actors",
+					dataSrc: ""
+				},
+				columns: [
+					{
+						data: "name",
+						render: function (data, type, actor) {
+							return "<a href='/actors/Details/" + actor.id + "'>" + actor.name + "</a>"
+						}
+
+					}
+
+				]
+			});
+
+		});
+	</script>
+}

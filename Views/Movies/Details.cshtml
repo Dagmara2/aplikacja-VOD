@@ -1,0 +1,20 @@
+﻿@model VOD.Models.Movie
+
+@{
+	ViewBag.Title = Model.Name;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="main-name">@Model.Name</h2>
+
+<p>Description: @Model.Description</p>
+
+<ul>
+	
+	<li>Genre: @Model.Genre.Name</li>
+	<li>Director: @Model.Dir.Name</li>
+	<li>Release Date: @Model.ReleaseDate.ToShortDateString()</li>
+	<li>Added: @Model.DateAdded.ToShortDateString()</li>
+
+
+</ul>

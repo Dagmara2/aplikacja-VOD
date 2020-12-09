@@ -1,0 +1,34 @@
+﻿@model IEnumerable<VOD.ViewModels.RolesViewModel>
+
+@{
+	ViewBag.Title = "ShowAccounts";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Show Accounts</h2>
+
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Username</th>
+			<th>E-mail</th>
+			<th>User Role</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var user in Model.ToList())
+		{
+		<tr>
+			<td>@user.UserName</td>
+			<td>@user.Email</td>
+
+			@foreach (var role in user.RoleNames)
+			
+				{
+			<td> @role </td>
+			}
+			
+		</tr>
+		}
+	</tbody>
+</table>

@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<VOD.Models.Actor>
+
+@{
+	ViewBag.Title = "Actors";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Actors</h2>
+<p>
+	@Html.ActionLink("Add Actor", "New", "Actors", null, new { @class = "btn btn-primary" })
+</p>
+
+<table id="actors" class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Actor</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+</table>
+
+@section scripts
+	{
+	<script>
+		$(document).ready(function () {
+
+			var table = $("#actors").DataTable({
+				ajax: {
+					url: "/api/actors",
+					dataSrc: ""
+				},
+				columns: [
+					{
+						data: "name",
+						render: function (data, type, actor) {
+							return "<a href='/actors/edit/" + actor.id + "'>" + actor.name + "</a>"
+						}
+					},
+					{
+						data: "id",
+						render: function (data) {
+							return "<button class='btn btn-danger js-delete' data-actor-id=" + data + ">X</button>";
+						}
+					}
+				]
+			});
+
+			$("#actors").on("click", ".js-delete", function () {
+				var button = $(this);
+				bootbox.confirm("Are you sure you want to delete actor?", function (result) {
+					if (result) {
+						$.ajax({
+							url: "/api/actors/" + button.attr("data-actor-id"),
+							method: "DELETE",
+							success: function () {
+								table.row(button.parents("tr")).remove().draw();
+
+							}
+						});
+					}
+				});
+
+			});
+		});
+	</script>
+}

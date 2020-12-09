@@ -1,0 +1,18 @@
+﻿@model IEnumerable<VOD.Modelss.Rental>
+@{
+	ViewBag.Title = "MyMovies";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="main-name">My Movies</h2>
+
+		@foreach (var item in Model)
+		{
+		<ul>
+			<li> @item.MovieName</li>
+			
+		</ul>
+
+		}
+
+
