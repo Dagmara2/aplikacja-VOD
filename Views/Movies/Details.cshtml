@@ -1,20 +1,29 @@
 ﻿@model VOD.Models.Movie
 
 @{
-	ViewBag.Title = Model.Name;
+	//ViewBag.Title = Model.Name;
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="main-name">@Model.Name</h2>
+<h2 class="main-name">@ViewBag.Movies.Name</h2>
 
-<p>Description: @Model.Description</p>
+<p>Description: @ViewBag.Movies.Description</p>
 
 <ul>
+
+	<li><b>Genre:</b> @ViewBag.Movies.Genre.Name</li>
+	<li><b>Director:</b> @ViewBag.Movies.Dir.Name</li>
+	<li><b>Release Date:</b> @ViewBag.Movies.ReleaseDate.ToShortDateString()</li>
+	<li><b>Added:</b> @ViewBag.Movies.DateAdded.ToShortDateString()</li>
+	<li><b>Actors:</b></li>
+		@foreach (var item in ViewBag.ActorsInMovies)
+		{
+
+		<p> @item.ActorName</p>
+
+	}
 	
-	<li>Genre: @Model.Genre.Name</li>
-	<li>Director: @Model.Dir.Name</li>
-	<li>Release Date: @Model.ReleaseDate.ToShortDateString()</li>
-	<li>Added: @Model.DateAdded.ToShortDateString()</li>
+
+	</ul>
 
 
-</ul>

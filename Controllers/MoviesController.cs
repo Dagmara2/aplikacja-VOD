@@ -39,15 +39,20 @@ namespace VOD.Controllers
 		}
 		public ActionResult Details(int id)
 		{
+
+			var actor = _context.ActorsInMovies.Where(m => m.MovieId == id).ToList();
 			var movie = _context.Movies.Include(m => m.Genre).Include(m => m.Dir).SingleOrDefault(m => m.Id == id);
-			//var actor = _context.Movies.Include(m => m.Actor).SingleOrDefault(m => m.Id == id);
+			ViewBag.Movies = movie;
+			ViewBag.ActorsInMovies = actor;
+
+		
 
 			if (movie == null)
 				return HttpNotFound();
 		//	if (actor == null)
 			//	return HttpNotFound();
 
-			return View(movie);
+			return View();
 		}
 		[Authorize(Roles = RoleName.CanManageMovies)]
 		public ActionResult New()
@@ -59,7 +64,7 @@ namespace VOD.Controllers
 				Genres = genres,
 				Dirs = dirs
 			};
-			return View("MovieFullForm", viewModel);
+			return View("MovieForm", viewModel);
 		}
 
 		[HttpPost]
