@@ -33,6 +33,7 @@ namespace VOD.Controllers
 		public ActionResult Details(int id)
 		{
 			var dir = _context.Dirs.SingleOrDefault(m => m.Id == id);
+			var movies = _context.Movies.Where(m => m.DirId == id);
 
 			if (dir == null)
 				return HttpNotFound();

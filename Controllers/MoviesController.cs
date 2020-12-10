@@ -114,6 +114,24 @@ namespace VOD.Controllers
 
 			return View("MovieFullForm", viewModel);
 		}
+		public ActionResult EditFull(int id)
+		{
+			ViewBag.FormId = id;
+
+			var movie = _context.Movies.SingleOrDefault(c => c.Id == id);
+
+			if (movie == null)
+				return HttpNotFound();
+
+			var viewModel = new NewMovieViewModel(movie)
+			{
+				Genres = _context.Genres.ToList(),
+				Dirs = _context.Dirs.ToList()
+
+			};
+
+			return View("FullMovieForm", viewModel);
+		}
 
 		public ActionResult Rent(int id)
 		{
