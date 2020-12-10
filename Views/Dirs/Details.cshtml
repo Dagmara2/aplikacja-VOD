@@ -1,8 +1,28 @@
 ﻿@model VOD.Models.Dir
 @{
-	ViewBag.Title = Model.Name;
+	//ViewBag.Title = Model.Name;
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="main-name">@Model.Name</h2>
+<h2 class="main-name">@ViewBag.Dirs.Name</h2>
 
+
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Movie</th>
+		</tr>
+	</thead>
+	<tbody>
+
+		@foreach (var item in ViewBag.Movies)
+		{
+		<tr>
+			<td> @item.Name</td>
+
+			
+		</tr>
+		}
+	</tbody>
+</table>
+</table>

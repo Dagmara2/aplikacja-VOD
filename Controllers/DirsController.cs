@@ -32,13 +32,19 @@ namespace VOD.Controllers
 		}
 		public ActionResult Details(int id)
 		{
+			//NewDirViewModel dirViewModel = new NewDirViewModel();
+			
+			
 			var dir = _context.Dirs.SingleOrDefault(m => m.Id == id);
-			var movies = _context.Movies.Where(m => m.DirId == id);
+			var movies = _context.Movies.Where(m => m.DirId == id).ToList();
+			ViewBag.Movies = movies;
+			ViewBag.Dirs = dir;
+			//dirViewModel.Movies = movies;
 
 			if (dir == null)
 				return HttpNotFound();
 
-			return View(dir);
+			return View();
 		}
 		[Authorize(Roles = RoleName.CanManageMovies)]
 		public ActionResult New()

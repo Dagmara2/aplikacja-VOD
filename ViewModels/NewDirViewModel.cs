@@ -9,6 +9,7 @@ namespace VOD.ViewModels
 {
 	public class NewDirViewModel
 	{
+		public IEnumerable<Movie> Movies { get; set; }
 		public int? Id { get; set; }
 		[Required]
 		[StringLength(255)]

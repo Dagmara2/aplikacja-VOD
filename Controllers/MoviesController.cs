@@ -95,9 +95,49 @@ namespace VOD.Controllers
 
 			}
 			_context.SaveChanges();
+			return RedirectToAction("EditFull", "Movies", new { movie.Id });
+			//return RedirectToAction("Index", "Movies", new { movie.Id });
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult SaveFull(Movie movie)
+		{
+			if (!ModelState.IsValid)
+			{
+				var viewModel = new NewMovieViewModel(movie)
+				{
+					//Movie = movie,
+					Genres = _context.Genres.ToList(),
+					Dirs = _context.Dirs.ToList()
+
+				};
+
+				return View("MovieForm", viewModel);
+			}
+
+			if (movie.Id == 0)
+			{
+				movie.DateAdded = DateTime.Now;
+				_context.Movies.Add(movie);
+			}
+			else
+			{
+				var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+
+				movieInDb.Name = movie.Name;
+				movieInDb.Description = movie.Description;
+				movieInDb.ReleaseDate = movie.ReleaseDate;
+				movieInDb.GenreId = movie.GenreId;
+				movieInDb.DirId = movie.DirId;
+				movieInDb.ActorId = movie.ActorId;
+			}
+
+			_context.SaveChanges();
 
 			return RedirectToAction("Index", "Movies", new { movie.Id });
 		}
+
 		[Authorize(Roles = RoleName.CanManageMovies)]
 		public ActionResult Edit(int id)
 		{
@@ -112,7 +152,7 @@ namespace VOD.Controllers
 				Dirs = _context.Dirs.ToList()
 			};
 
-			return View("MovieFullForm", viewModel);
+			return View("MovieForm", viewModel);
 		}
 		public ActionResult EditFull(int id)
 		{
@@ -130,7 +170,7 @@ namespace VOD.Controllers
 
 			};
 
-			return View("FullMovieForm", viewModel);
+			return View("MovieFullForm", viewModel);
 		}
 
 		public ActionResult Rent(int id)
