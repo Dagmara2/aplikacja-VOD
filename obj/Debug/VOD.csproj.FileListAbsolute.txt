@@ -205,3 +205,4 @@ C:\Users\dagas\OneDrive\Desktop\VOD_inz\obj\Debug\VOD.Migrations.AddMovieActor.r
 C:\Users\dagas\OneDrive\Desktop\VOD_inz\obj\Debug\VOD.Migrations.FillActors.resources
 C:\Users\dagas\OneDrive\Desktop\VOD_inz\obj\Debug\VOD.Migrations.FixActorsInMovies.resources
 C:\Users\dagas\OneDrive\Desktop\VOD_inz\obj\Debug\VOD.Migrations.Fix.resources
+C:\Users\dagas\OneDrive\Desktop\VOD_inz\obj\Debug\VOD.Migrations.DropTables.resources

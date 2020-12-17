@@ -14,25 +14,20 @@ namespace VOD.App_Start
 		{
 
 			// Domain to Dto
-			Mapper.CreateMap<Customer, CustomerDto>();
+			
 			Mapper.CreateMap<Movie, MovieDto>();
-			Mapper.CreateMap<MembershipType, MembershipTypeDto>();
+			
 			Mapper.CreateMap<Genre, GenreDto>();
 			Mapper.CreateMap<Dir, DirDto>();
-			Mapper.CreateMap<Actor, ActorDto>();
+			
 
-			// Dto to Domain
-			Mapper.CreateMap<CustomerDto, Customer>()
-				.ForMember(c => c.Id, opt => opt.Ignore());
-
+			
 			Mapper.CreateMap<MovieDto, Movie>()
 				.ForMember(c => c.Id, opt => opt.Ignore());
 
 			Mapper.CreateMap<DirDto, Dir>()
 				.ForMember(c => c.Id, opt => opt.Ignore());
 
-			Mapper.CreateMap<ActorDto, Actor>()
-				.ForMember(c => c.Id, opt => opt.Ignore());
 		}
 	}
 }

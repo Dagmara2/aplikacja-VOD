@@ -12,9 +12,7 @@ namespace VOD.ViewModels
 	{
 		public IEnumerable<Genre> Genres { get; set; }
 		public IEnumerable<Dir> Dirs { get; set; }
-		public ICollection<MovieActor> MovieActors { get; set; }
-
-		public virtual ICollection<Actor> Actors { get; set; }
+	
 		public int? Id { get; set; }
 		[Required]
 		[StringLength(255)]
@@ -46,8 +44,7 @@ namespace VOD.ViewModels
 		public NewMovieViewModel()
 		{
 			Id = 0;
-			Actors = new Collection<Actor>();
-			MovieActors = new Collection<MovieActor>();
+		
 		}
 		public NewMovieViewModel(Movie movie)
 		{
